@@ -1,6 +1,6 @@
 # misskey-abuse-user-report-notifier
-Misskeyサーバーに対する通報をDiscordサーバーに流すプログラム  
-プログラム自体は1回実行すると落ちるので、crontab等を使って定期実行する想定
+Misskeyサーバーに対する通報をDiscordサーバーに流すプログラム。  
+プログラム自体は1回実行すると落ちるので、crontab等を使って定期実行する想定。
 
 ## 開発環境
 
@@ -14,7 +14,7 @@ Misskeyサーバーに対する通報をDiscordサーバーに流すプログラ
 #### 共通
 
 1. `cp .env.example .env` を実行して `.env` を作成します。
-2. `.env` 内のTODOコメントに従って設定を行います。
+2. `.env` 内のTODOコメントに従って設定します。
 
 #### 編集するとhot reloadが走る、開発に適したバージョン
 

@@ -39,7 +39,7 @@ func main() {
 	migrator := db.Migrator()
 
 	if !migrator.HasTable(&UserReport{}) {
-		if err := migrator.CreateTable(&UserReport{}); err != nil {
+		if err = migrator.CreateTable(&UserReport{}); err != nil {
 			logrus.Error(err.Error())
 			return
 		}

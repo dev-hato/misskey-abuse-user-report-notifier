@@ -89,7 +89,7 @@ jobs:
 
             if [[ "${image_name}" =~ "app:" ]]; then
               cmd+="-i CIS-DI-0006 "
-            elif [[ "${image_name}" =~ "db" ]]; then
+            elif [[ "${image_name}" =~ "db-dev" ]]; then
               cmd+="-ak key "
             fi
 

@@ -25,7 +25,7 @@ docker compose -f docker-compose.yml -f dev.base.docker-compose.yml -f dev.docke
 ```
 
 #### 本番環境
-PostgreSQLのDBを別途用意した上で以下を実行します。
+PostgreSQLのDBを別途用意したうえで以下を実行します。
 
 ```sh
 export TAG_NAME=$(git symbolic-ref --short HEAD | sed -e "s:/:-:g" | sed -e "s/^main$/latest/g")

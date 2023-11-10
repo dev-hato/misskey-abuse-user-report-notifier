@@ -2,9 +2,9 @@
 Misskeyサーバーに対する通報をDiscordサーバーに流すプログラム。  
 プログラム自体は1回実行すると落ちるので、crontab等を使って定期実行する想定。
 
-## 開発環境
+## 環境
 
-### 設定
+### 開発時の設定
 
 <https://pre-commit.com/> の手順に従って `pre-commit` をインストールする。  
 これにより、[.pre-commit-config.yaml](.pre-commit-config.yaml)の設定に基づいて、コミット時にクレデンシャルが含まれていないかの検査が行われるようになる。

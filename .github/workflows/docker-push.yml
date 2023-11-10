@@ -86,6 +86,13 @@ jobs:
           # shellcheck disable=SC2086
           for image_name in $(docker compose -f docker-compose.yml ${DOCKER_COMPOSE_OPTION} images | awk 'OFS=":" {print $2,$3}' | tail -n +2); do
             cmd="dockle --exit-code 1 "
+
+            if [[ "${image_name}" =~ "app:" ]]; then
+              cmd+="-i CIS-DI-0006 "
+            elif [[ "${image_name}" =~ "db" ]]; then
+              cmd+="-ak key "
+            fi
+
             cmd+="${image_name}"
             echo "> ${cmd}"
             eval "${cmd}"

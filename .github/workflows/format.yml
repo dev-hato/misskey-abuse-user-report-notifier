@@ -30,7 +30,6 @@ jobs:
           cache: npm
       - if: github.event_name != 'pull_request' || github.event.action != 'closed'
         run: |
-          go mod download golang.org/x/tools
           go install golang.org/x/tools/cmd/goimports
           go mod tidy
           goimports -l -w .

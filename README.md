@@ -20,8 +20,8 @@ Misskeyサーバーに対する通報をDiscordサーバーに流すプログラ
 
 ```sh
 export TAG_NAME=$(git symbolic-ref --short HEAD | sed -e "s:/:-:g" | sed -e "s/^main$/latest/g")
-docker compose -f docker-compose.yml -f dev.docker-compose.yml build
-docker compose -f docker-compose.yml -f dev.docker-compose.yml watch
+docker compose -f docker-compose.yml -f dev.base.docker-compose.yml -f dev.docker-compose.yml build
+docker compose -f docker-compose.yml -f dev.base.docker-compose.yml -f dev.docker-compose.yml watch
 ```
 
 #### 限りなく本番に近い設定で動くバージョン

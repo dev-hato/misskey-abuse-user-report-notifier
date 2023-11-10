@@ -36,7 +36,7 @@ jobs:
           DOCKER_CONTENT_TRUST: 1
         with:
           push: true
-          files: docker-compose.yml,dev.docker-compose.yml
+          files: docker-compose.yml,dev.base.docker-compose.yml
       - name: Build and push (production)
         uses: docker/bake-action@v4.0.0
         env:
@@ -62,7 +62,7 @@ jobs:
       - update-dockle
     strategy:
       matrix:
-        docker_compose_option: ["-f dev.docker-compose.yml", ""]
+        docker_compose_option: ["-f dev.base.docker-compose.yml", ""]
     env:
       DOCKER_CONTENT_TRUST: 1
       REPOSITORY: ${{github.repository}}

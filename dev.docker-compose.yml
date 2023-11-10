@@ -1,11 +1,5 @@
 services:
   app:
-    build:
-      target: develop
-      cache_from:
-        - ghcr.io/${REPOSITORY:-dev-hato/misskey-abuse-user-report-notifier}/app-dev:${TAG_NAME:-latest}
-        - ghcr.io/${REPOSITORY:-dev-hato/misskey-abuse-user-report-notifier}/app-dev
-    image: ghcr.io/${REPOSITORY:-dev-hato/misskey-abuse-user-report-notifier}/app-dev:${TAG_NAME:-latest}
     develop:
       watch:
         - action: rebuild

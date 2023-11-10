@@ -16,7 +16,7 @@ Misskeyサーバーに対する通報をDiscordサーバーに流すプログラ
 1. `cp .env.example .env` を実行して `.env` を作成します。
 2. `.env` 内のTODOコメントに従って設定します。
 
-#### 編集するとhot reloadが走る、開発に適したバージョン
+#### 開発環境
 
 ```sh
 export TAG_NAME=$(git symbolic-ref --short HEAD | sed -e "s:/:-:g" | sed -e "s/^main$/latest/g")
@@ -24,7 +24,7 @@ docker compose -f docker-compose.yml -f dev.base.docker-compose.yml -f dev.docke
 docker compose -f docker-compose.yml -f dev.base.docker-compose.yml -f dev.docker-compose.yml watch
 ```
 
-#### 限りなく本番に近い設定で動くバージョン
+#### 本番環境
 
 ```sh
 export TAG_NAME=$(git symbolic-ref --short HEAD | sed -e "s:/:-:g" | sed -e "s/^main$/latest/g")

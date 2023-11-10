@@ -20,6 +20,8 @@ RUN mapfile -t PLATFORM < <(echo "${TARGETPLATFORM}" | tr '/' ' ') \
 RUN find / -type f -perm /u+s -ignore_readdir_race -exec chmod u-s {} \; \
     && find / -type f -perm /g+s -ignore_readdir_race -exec chmod g-s {} \;
 
+RUN useradd -l -m -s /bin/bash -N -u "1000" "nonroot"
+
 USER nonroot
 
 CMD ["air", "-c", ".air.toml"]

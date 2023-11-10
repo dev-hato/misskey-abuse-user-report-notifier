@@ -3,18 +3,16 @@ package main
 import (
 	"errors"
 	"fmt"
-
 	"github.com/bwmarrin/discordgo"
 	"github.com/sirupsen/logrus"
 	"github.com/yitsushi/go-misskey"
 	"github.com/yitsushi/go-misskey/services/admin/moderation"
 	"gorm.io/driver/postgres"
 
-	"os"
-	"slices"
-
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
+	"os"
+	"slices"
 )
 
 type UserReport struct {

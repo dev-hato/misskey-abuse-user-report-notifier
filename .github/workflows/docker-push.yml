@@ -75,6 +75,7 @@ jobs:
       - env:
           DOCKER_COMPOSE_OPTION: ${{matrix.docker_compose_option}}
         run: |
+          cp .env.example .env
           dockle_version="$(cat .dockle-version)"
           curl -L -o dockle.deb "https://github.com/goodwithtech/dockle/releases/download/v${dockle_version}/dockle_${dockle_version}_Linux-64bit.deb"
           sudo dpkg -i dockle.deb

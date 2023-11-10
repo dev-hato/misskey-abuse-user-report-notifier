@@ -12,6 +12,3 @@ services:
     image: ghcr.io/${REPOSITORY:-dev-hato/misskey-abuse-user-report-notifier}/app:${TAG_NAME:-latest}
     env_file:
       - .env
-    depends_on:
-      db:
-        condition: service_healthy

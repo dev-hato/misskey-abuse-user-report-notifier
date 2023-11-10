@@ -6,6 +6,9 @@ services:
         - ghcr.io/${REPOSITORY:-dev-hato/misskey-abuse-user-report-notifier}/app-dev:${TAG_NAME:-latest}
         - ghcr.io/${REPOSITORY:-dev-hato/misskey-abuse-user-report-notifier}/app-dev
     image: ghcr.io/${REPOSITORY:-dev-hato/misskey-abuse-user-report-notifier}/app-dev:${TAG_NAME:-latest}
+    depends_on:
+      db:
+        condition: service_healthy
   db:
     build:
       context: db

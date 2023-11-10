@@ -1,0 +1,32 @@
+---
+name: format-json-yml
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - closed
+  push:
+    branches:
+      - main
+  merge_group:
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  format-json-yml:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.1.1
+        if: github.event_name != 'pull_request' || github.event.action != 'closed'
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.event.merge_group.head_sha }}
+          token: ${{secrets.CREATE_WORKFLOW_CI_TOKEN}}
+      - uses: dev-hato/actions-format-json-yml@v0.0.50
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true

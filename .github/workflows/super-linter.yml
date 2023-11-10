@@ -1,0 +1,34 @@
+---
+name: super-linter
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  merge_group:
+  workflow_dispatch:
+jobs:
+  super-linter:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4.1.1
+      - uses: actions/setup-node@v4.0.0
+        with:
+          node-version-file: .node-version
+          cache: npm
+      - run: |
+          npm ci
+          action="$(yq '.jobs.super-linter.steps[-1].uses' .github/workflows/super-linter.yml)"
+          PATH="$(docker run --rm --entrypoint '' "ghcr.io/${action//\/slim@/:slim-}" /bin/sh -c 'echo $PATH')"
+          echo "PATH=/github/workspace/node_modules/.bin:${PATH}" >> "$GITHUB_ENV"
+      - name: Super-Linter
+        uses: super-linter/super-linter/slim@v5.4.3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LINTER_RULES_PATH: .
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true

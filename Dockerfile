@@ -4,7 +4,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG TARGETPLATFORM
 
 WORKDIR /go/app
-COPY go.mod go.sum tools.go ./
+COPY go.mod go.sum ./
 RUN go install github.com/cosmtrek/air
 COPY main.go .air.toml ./
 RUN mapfile -t PLATFORM < <(echo "${TARGETPLATFORM}" | tr '/' ' ') \

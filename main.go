@@ -53,7 +53,7 @@ func main() {
 		logrus.Fatal(err.Error())
 	}
 
-	userReportsRequest := moderation.UserReportsRequest{Limit: 2}
+	userReportsRequest := moderation.UserReportsRequest{Limit: 10}
 
 	latestUserReport, err := dbClient.UserReport.Query().
 		Order(ent.Desc(userreport.FieldCreatedAt), ent.Desc(userreport.FieldID)).

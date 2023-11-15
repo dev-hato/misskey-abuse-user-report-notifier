@@ -7,8 +7,7 @@ WORKDIR /go/app
 COPY go.mod go.sum ./
 COPY tools/tools.go ./tools/
 RUN go install github.com/cosmtrek/air
-COPY main.go .air.toml ./
-COPY ent/ ./ent/
+COPY . .
 RUN mapfile -t PLATFORM < <(echo "${TARGETPLATFORM}" | tr '/' ' ') \
     && CGO_ENABLED=0 GOOS=linux GOARCH=${PLATFORM[2]} go build -o ./app \
     && rm -rf /go/pkg/mod/dario.cat/mergo@*/.vscode \

@@ -237,21 +237,5 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-.env*
-*docker-compose.yml
-.idea
 .dockerignore
-.dockle-version
-.git
-.github
-.gitignore
-.gitleaks.toml
-.golangci.yml
-.pre-commit-config.yaml
-.textlintrc
 Dockerfile
-LICENSE
-README.md
-db
-package*.json
-renovate.json

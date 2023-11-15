@@ -14,7 +14,6 @@ issues:
         - dupl
         - gosec
         - goconst
-    - path: ent/
 run:
   skip-dirs:
     - ent/

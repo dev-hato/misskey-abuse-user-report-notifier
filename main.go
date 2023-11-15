@@ -32,16 +32,14 @@ func main() {
 		os.Getenv("POSTGRES_TIMEZONE"),
 	)))
 	if err != nil {
-		logrus.Error(err.Error())
-		return
+		logrus.Fatal(err.Error())
 	}
 
 	migrator := db.Migrator()
 
 	if !migrator.HasTable(&UserReport{}) {
 		if err = migrator.CreateTable(&UserReport{}); err != nil {
-			logrus.Error(err.Error())
-			return
+			logrus.Fatal(err.Error())
 		}
 	}
 
@@ -53,8 +51,7 @@ func main() {
 		misskey.WithLogLevel(logrus.DebugLevel),
 	)
 	if err != nil {
-		logrus.Error(err.Error())
-		return
+		logrus.Fatal(err.Error())
 	}
 
 	userReportsRequest := moderation.UserReportsRequest{Limit: 2}
@@ -67,20 +64,17 @@ func main() {
 	if err == nil {
 		userReportsRequest.SinceID = latestUserReport.ID
 	} else if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
-		logrus.Error(err.Error())
-		return
+		logrus.Fatal(err.Error())
 	}
 
 	discord, err := discordgo.New("")
 	if err != nil {
-		logrus.Error(err.Error())
-		return
+		logrus.Fatal(err.Error())
 	}
 
 	reports, err := client.Admin().Moderation().UserReports(userReportsRequest)
 	if err != nil {
-		logrus.Error(err.Error())
-		return
+		logrus.Fatal(err.Error())
 	}
 
 	slices.Reverse(reports)
@@ -110,13 +104,11 @@ func main() {
 			)},
 		)
 		if err != nil {
-			logrus.Error(err.Error())
-			return
+			logrus.Fatal(err.Error())
 		}
 
 		if err := db.Create(&UserReport{ID: report.ID}).Error; err != nil {
-			logrus.Error(err.Error())
-			return
+			logrus.Fatal(err.Error())
 		}
 	}
 }

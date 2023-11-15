@@ -246,7 +246,6 @@ Temporary Items
 .github
 .gitignore
 .gitleaks.toml
-.golangci.yml
 .pre-commit-config.yaml
 .textlintrc
 Dockerfile

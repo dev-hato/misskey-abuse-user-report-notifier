@@ -1,51 +1,50 @@
 package main
 
 import (
-	"errors"
+	"context"
 	"fmt"
 
 	"github.com/bwmarrin/discordgo"
+	"github.com/dev-hato/misskey-abuse-user-report-notifier/ent"
+	"github.com/dev-hato/misskey-abuse-user-report-notifier/ent/userreport"
+	_ "github.com/lib/pq"
 	"github.com/sirupsen/logrus"
 	"github.com/yitsushi/go-misskey"
 	"github.com/yitsushi/go-misskey/services/admin/moderation"
-	"gorm.io/driver/postgres"
 
 	"os"
 	"slices"
-
-	"gorm.io/gorm"
-	"gorm.io/gorm/clause"
 )
 
-type UserReport struct {
-	gorm.Model
-	ID string `gorm:"primaryKey"`
+func closeDBClient(db *ent.Client) {
+	if err := db.Close(); err != nil {
+		logrus.Fatal(err.Error())
+	}
 }
 
 func main() {
-	db, err := gorm.Open(postgres.Open(fmt.Sprintf(
+	dbClient, err := ent.Open("postgres", fmt.Sprintf(
 		"host=%s user=%s password=%s dbname=%s TimeZone=%s",
 		os.Getenv("POSTGRES_HOST"),
 		os.Getenv("POSTGRES_USER"),
 		os.Getenv("POSTGRES_PASSWORD"),
 		os.Getenv("POSTGRES_DB"),
 		os.Getenv("POSTGRES_TIMEZONE"),
-	)))
+	))
 	if err != nil {
 		logrus.Fatal(err.Error())
 	}
+	defer closeDBClient(dbClient)
 
-	migrator := db.Migrator()
+	ctx := context.Background()
 
-	if !migrator.HasTable(&UserReport{}) {
-		if err = migrator.CreateTable(&UserReport{}); err != nil {
-			logrus.Fatal(err.Error())
-		}
+	if err := dbClient.Schema.Create(ctx); err != nil {
+		logrus.Fatal(err.Error())
 	}
 
 	serverHost := os.Getenv("MISSKEY_HOST")
 
-	client, err := misskey.NewClientWithOptions(
+	misskeyClient, err := misskey.NewClientWithOptions(
 		misskey.WithAPIToken(os.Getenv("MISSKEY_TOKEN")),
 		misskey.WithBaseURL("https", serverHost, ""),
 		misskey.WithLogLevel(logrus.DebugLevel),
@@ -55,24 +54,22 @@ func main() {
 	}
 
 	userReportsRequest := moderation.UserReportsRequest{Limit: 2}
-	var latestUserReport UserReport
 
-	err = db.
-		Order(clause.OrderByColumn{Column: clause.Column{Name: "updated_at"}, Desc: true}).
-		Order(clause.OrderByColumn{Column: clause.Column{Name: "id"}, Desc: true}).
-		First(&latestUserReport).Error
+	latestUserReport, err := dbClient.UserReport.Query().
+		Order(ent.Desc(userreport.FieldCreatedAt), ent.Desc(userreport.FieldID)).
+		First(ctx)
 	if err == nil {
 		userReportsRequest.SinceID = latestUserReport.ID
-	} else if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
+	} else if err != nil && !ent.IsNotFound(err) {
 		logrus.Fatal(err.Error())
 	}
 
-	discord, err := discordgo.New("")
+	discordSession, err := discordgo.New("")
 	if err != nil {
 		logrus.Fatal(err.Error())
 	}
 
-	reports, err := client.Admin().Moderation().UserReports(userReportsRequest)
+	reports, err := misskeyClient.Admin().Moderation().UserReports(userReportsRequest)
 	if err != nil {
 		logrus.Fatal(err.Error())
 	}
@@ -86,7 +83,7 @@ func main() {
 			hostName = *report.TargetUser.Host
 		}
 
-		_, err = discord.WebhookExecute(
+		_, err = discordSession.WebhookExecute(
 			os.Getenv("DISCORD_WEBHOOK_ID"),
 			os.Getenv("DISCORD_WEBHOOK_TOKEN"),
 			true,
@@ -107,7 +104,7 @@ func main() {
 			logrus.Fatal(err.Error())
 		}
 
-		if err := db.Create(&UserReport{ID: report.ID}).Error; err != nil {
+		if _, err := dbClient.UserReport.Create().SetID(report.ID).Save(ctx); err != nil {
 			logrus.Fatal(err.Error())
 		}
 	}

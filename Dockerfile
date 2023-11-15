@@ -8,6 +8,7 @@ COPY go.mod go.sum ./
 COPY tools/tools.go ./tools/
 RUN go install github.com/cosmtrek/air
 COPY main.go .air.toml ./
+COPY ent/ ./ent/
 RUN mapfile -t PLATFORM < <(echo "${TARGETPLATFORM}" | tr '/' ' ') \
     && CGO_ENABLED=0 GOOS=linux GOARCH=${PLATFORM[2]} go build -o ./app \
     && rm -rf /go/pkg/mod/dario.cat/mergo@*/.vscode \
@@ -17,10 +18,11 @@ RUN mapfile -t PLATFORM < <(echo "${TARGETPLATFORM}" | tr '/' ' ') \
               /usr/local/go/src/crypto/internal/boring/Dockerfile \
               /usr/local/go/src/crypto/internal/nistec/fiat/Dockerfile
 
+RUN useradd -l -m -s /bin/bash -N -u "1000" "nonroot" \
+    && chown -R nonroot /go/app/
+
 RUN find / -type f -perm /u+s -ignore_readdir_race -exec chmod u-s {} \; \
     && find / -type f -perm /g+s -ignore_readdir_race -exec chmod g-s {} \;
-
-RUN useradd -l -m -s /bin/bash -N -u "1000" "nonroot"
 
 USER nonroot
 

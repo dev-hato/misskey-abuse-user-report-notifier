@@ -39,7 +39,7 @@ func main() {
 
 	ctx := context.Background()
 
-	if err := dbClient.Schema.Create(ctx); err != nil {
+	if err = dbClient.Schema.Create(ctx); err != nil {
 		logrus.Fatal(err.Error())
 	}
 

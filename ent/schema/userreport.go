@@ -1,9 +1,10 @@
 package schema
 
 import (
+	"time"
+
 	"entgo.io/ent"
 	"entgo.io/ent/schema/field"
-	"time"
 )
 
 // UserReport holds the schema definition for the UserReport entity.

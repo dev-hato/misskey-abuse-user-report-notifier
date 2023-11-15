@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"strconv"
 
 	"github.com/bwmarrin/discordgo"
 	"github.com/dev-hato/misskey-abuse-user-report-notifier/ent"
@@ -53,7 +54,12 @@ func main() {
 		logrus.Fatal(err.Error())
 	}
 
-	userReportsRequest := moderation.UserReportsRequest{Limit: 10}
+	userReportsLimit, err := strconv.ParseUint(os.Getenv("MISSKEY_USER_REPORTS_LIMIT"), 10, 64)
+	if err != nil {
+		logrus.Fatal(err.Error())
+	}
+
+	userReportsRequest := moderation.UserReportsRequest{Limit: uint(userReportsLimit)}
 
 	latestUserReport, err := dbClient.UserReport.Query().
 		Order(ent.Desc(userreport.FieldCreatedAt), ent.Desc(userreport.FieldID)).

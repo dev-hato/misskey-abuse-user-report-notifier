@@ -15,8 +15,9 @@ issues:
         - gosec
         - goconst
     - path: ent/
-skip-dirs:
-  - ent/
+run:
+  skip-dirs:
+    - ent/
 linters:
   enable:
     - gosec

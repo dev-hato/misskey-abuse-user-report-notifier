@@ -110,7 +110,10 @@ func main() {
 			logrus.Fatal(err.Error())
 		}
 
-		if _, err := dbClient.UserReport.Create().SetID(report.ID).Save(ctx); err != nil {
+		if _, err := dbClient.UserReport.Create().
+			SetID(report.ID).
+			SetCreatedAt(report.CreatedAt).
+			Save(ctx); err != nil {
 			logrus.Fatal(err.Error())
 		}
 	}

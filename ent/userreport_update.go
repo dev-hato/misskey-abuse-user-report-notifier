@@ -7,7 +7,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"time"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
@@ -26,20 +25,6 @@ type UserReportUpdate struct {
 // Where appends a list predicates to the UserReportUpdate builder.
 func (uru *UserReportUpdate) Where(ps ...predicate.UserReport) *UserReportUpdate {
 	uru.mutation.Where(ps...)
-	return uru
-}
-
-// SetCreatedAt sets the "created_at" field.
-func (uru *UserReportUpdate) SetCreatedAt(t time.Time) *UserReportUpdate {
-	uru.mutation.SetCreatedAt(t)
-	return uru
-}
-
-// SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
-func (uru *UserReportUpdate) SetNillableCreatedAt(t *time.Time) *UserReportUpdate {
-	if t != nil {
-		uru.SetCreatedAt(*t)
-	}
 	return uru
 }
 
@@ -84,9 +69,6 @@ func (uru *UserReportUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			}
 		}
 	}
-	if value, ok := uru.mutation.CreatedAt(); ok {
-		_spec.SetField(userreport.FieldCreatedAt, field.TypeTime, value)
-	}
 	if n, err = sqlgraph.UpdateNodes(ctx, uru.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{userreport.Label}
@@ -105,20 +87,6 @@ type UserReportUpdateOne struct {
 	fields   []string
 	hooks    []Hook
 	mutation *UserReportMutation
-}
-
-// SetCreatedAt sets the "created_at" field.
-func (uruo *UserReportUpdateOne) SetCreatedAt(t time.Time) *UserReportUpdateOne {
-	uruo.mutation.SetCreatedAt(t)
-	return uruo
-}
-
-// SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
-func (uruo *UserReportUpdateOne) SetNillableCreatedAt(t *time.Time) *UserReportUpdateOne {
-	if t != nil {
-		uruo.SetCreatedAt(*t)
-	}
-	return uruo
 }
 
 // Mutation returns the UserReportMutation object of the builder.
@@ -191,9 +159,6 @@ func (uruo *UserReportUpdateOne) sqlSave(ctx context.Context) (_node *UserReport
 				ps[i](selector)
 			}
 		}
-	}
-	if value, ok := uruo.mutation.CreatedAt(); ok {
-		_spec.SetField(userreport.FieldCreatedAt, field.TypeTime, value)
 	}
 	_node = &UserReport{config: uruo.config}
 	_spec.Assign = _node.assignValues

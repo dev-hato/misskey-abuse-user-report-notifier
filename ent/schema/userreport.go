@@ -16,7 +16,7 @@ type UserReport struct {
 func (UserReport) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("id").StorageKey("id"),
-		field.Time("created_at").Default(time.Now),
+		field.Time("created_at").Immutable().Default(time.Now),
 	}
 }
 

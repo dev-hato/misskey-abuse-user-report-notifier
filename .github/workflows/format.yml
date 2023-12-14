@@ -1,0 +1,46 @@
+---
+name: format
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - closed
+  push:
+    branches:
+      - main
+  merge_group:
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.1.1
+        if: github.event_name != 'pull_request' || github.event.action != 'closed'
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.event.merge_group.head_sha }}
+      - uses: actions/setup-go@v4.1.0
+        if: github.event_name != 'pull_request' || github.event.action != 'closed'
+        with:
+          go-version-file: go.mod
+      - uses: actions/setup-node@v4.0.0
+        if: github.event_name != 'pull_request' || github.event.action != 'closed'
+        with:
+          cache: npm
+      - if: github.event_name != 'pull_request' || github.event.action != 'closed'
+        run: |
+          go install golang.org/x/tools/cmd/goimports
+          go generate ./ent
+          go mod tidy
+          goimports -l -w .
+      - if: github.event_name != 'pull_request' || github.event.action != 'closed'
+        run: npm install
+      - uses: dev-hato/actions-diff-pr-management@v1.1.6
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          branch-name-prefix: fix-format
+          pr-title-prefix: formatが間違ってたので直してあげたよ！
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true

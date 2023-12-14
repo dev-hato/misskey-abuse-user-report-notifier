@@ -1,0 +1,14 @@
+services:
+  app:
+    build:
+      context: .
+      x-bake:
+        platforms:
+          - linux/amd64
+          - linux/arm64
+      cache_from:
+        - ghcr.io/${REPOSITORY:-dev-hato/misskey-abuse-user-report-notifier}/app:${TAG_NAME:-latest}
+        - ghcr.io/${REPOSITORY:-dev-hato/misskey-abuse-user-report-notifier}/app
+    image: ghcr.io/${REPOSITORY:-dev-hato/misskey-abuse-user-report-notifier}/app:${TAG_NAME:-latest}
+    env_file:
+      - .env

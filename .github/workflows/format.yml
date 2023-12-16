@@ -42,13 +42,16 @@ jobs:
           goimports -l -w .
       - if: github.event_name != 'pull_request' || github.event.action != 'closed'
         run: npm install
-      - if: github.event_name != 'pull_request' || github.event.action != 'closed'
+      - name: Get Misskey's Postgres version
+        id: get_misskey_postgres_version
+        if: github.event_name != 'pull_request' || github.event.action != 'closed'
         run: |
           cp .config/docker_example.env .config/docker.env
           cp ./docker-compose.yml.example ./docker-compose.yml
-          version="$(docker compose run --rm db pg_config --version | awk '{print $NF}')"
-          sed -i -e "s/FROM postgres:\(.*\)/FROM postgres:$version/g" ../db/Dockerfile
+          echo "version=$(docker compose run --rm db pg_config --version | awk '{print $NF}')" >> "$GITHUB_OUTPUT"
         working-directory: misskey
+      - if: github.event_name != 'pull_request' || github.event.action != 'closed'
+        run: sed -i -e "s/FROM postgres:\(.*\)/FROM postgres:${{ steps.get_misskey_postgres_version.outputs.version }}/g" db/Dockerfile
       - uses: dev-hato/actions-diff-pr-management@v1.1.6
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}

@@ -47,7 +47,7 @@ jobs:
           cp .config/docker_example.env .config/docker.env
           cp ./docker-compose.yml.example ./docker-compose.yml
           version="$(docker compose run --rm db pg_config --version | awk '{print $NF}')"
-          sed -ie "s/FROM postgres:\(.*\)/FROM postgres:$version/g" ../db/Dockerfile
+          sed -i -e "s/FROM postgres:\(.*\)/FROM postgres:$version/g" ../db/Dockerfile
         working-directory: misskey
       - uses: dev-hato/actions-diff-pr-management@v1.1.6
         with:

@@ -20,6 +20,12 @@ jobs:
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha || github.event.merge_group.head_sha }}
+      - uses: actions/checkout@v4.1.1
+        if: github.event_name != 'pull_request' || github.event.action != 'closed'
+        with:
+          repository: misskey-dev/misskey
+          ref: master
+          path: misskey
       - uses: actions/setup-go@v5.0.0
         if: github.event_name != 'pull_request' || github.event.action != 'closed'
         with:
@@ -36,6 +42,13 @@ jobs:
           goimports -l -w .
       - if: github.event_name != 'pull_request' || github.event.action != 'closed'
         run: npm install
+      - if: github.event_name != 'pull_request' || github.event.action != 'closed'
+        run: |
+          cp .config/docker_example.env .config/docker.env
+          cp ./docker-compose.yml.example ./docker-compose.yml
+          version="$(docker compose run --rm db pg_config --version | awk '{print $NF}')"
+          sed -ie "s/FROM postgres:\(.*\)/FROM postgres:$version/g" ../db/Dockerfile
+        working-directory: misskey
       - uses: dev-hato/actions-diff-pr-management@v1.1.6
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}

@@ -54,7 +54,7 @@ func main() {
 		logrus.Fatal(err.Error())
 	}
 
-	userReportsLimit, err := strconv.ParseUint(os.Getenv("MISSKEY_USER_REPORTS_LIMIT"), 10, 64)
+	userReportsLimit, err := strconv.ParseUint(os.Getenv("MISSKEY_USER_REPORTS_LIMIT"), 10, 32)
 	if err != nil {
 		logrus.Fatal(err.Error())
 	}

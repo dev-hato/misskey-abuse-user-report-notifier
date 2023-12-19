@@ -30,7 +30,7 @@ jobs:
         if: github.event_name != 'pull_request' || github.event.action != 'closed'
         with:
           go-version-file: go.mod
-      - uses: actions/setup-node@v4.0.0
+      - uses: actions/setup-node@v4.0.1
         if: github.event_name != 'pull_request' || github.event.action != 'closed'
         with:
           cache: npm
@@ -52,7 +52,7 @@ jobs:
         working-directory: misskey
       - if: github.event_name != 'pull_request' || github.event.action != 'closed'
         run: sed -i -e 's/FROM postgres:.*/FROM postgres:${{ steps.get_misskey_postgres_version.outputs.version }}/g' db/Dockerfile
-      - uses: dev-hato/actions-diff-pr-management@v1.1.6
+      - uses: dev-hato/actions-diff-pr-management@v1.1.7
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           branch-name-prefix: fix-format

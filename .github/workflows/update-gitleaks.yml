@@ -23,14 +23,14 @@ jobs:
         with:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha || github.event.merge_group.head_sha }}
-      - uses: actions/setup-node@v4.0.0
+      - uses: actions/setup-node@v4.0.1
         if: github.event_name != 'pull_request' || github.event.action != 'closed'
         with:
           cache: npm
       - name: Install packages
         if: github.event_name != 'pull_request' || github.event.action != 'closed'
         run: npm ci
-      - uses: dev-hato/actions-update-gitleaks@v0.0.57
+      - uses: dev-hato/actions-update-gitleaks@v0.0.58
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
 concurrency:

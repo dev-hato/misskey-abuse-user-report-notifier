@@ -47,7 +47,7 @@ jobs:
         if: github.event_name != 'pull_request' || github.event.action != 'closed'
         run: |
           cp .config/docker_example.env .config/docker.env
-          cp ./docker-compose.yml.example ./docker-compose.yml
+          cp ./docker-compose_example.yml ./docker-compose.yml
           echo "version=$(docker compose run --rm db pg_config --version | awk '{print $NF}')" >> "$GITHUB_OUTPUT"
         working-directory: misskey
       - if: github.event_name != 'pull_request' || github.event.action != 'closed'

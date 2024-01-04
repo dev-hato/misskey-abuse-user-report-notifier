@@ -13,8 +13,8 @@ Misskeyサーバーに対する通報をDiscordサーバーに流すプログラ
 
 #### 共通
 
-1. `cp .env.example .env` を実行して `.env` を作成します。
-2. `.env` 内のTODOコメントに従って設定します。
+1. `cp .env.example .env` を実行して `.env` を作成する。
+2. `.env` 内のTODOコメントに従って設定する。
 
 #### 開発環境
 
@@ -25,7 +25,7 @@ docker compose -f docker-compose.yml -f dev.base.docker-compose.yml -f dev.docke
 ```
 
 #### 本番環境
-PostgreSQLのDBを別途用意したうえで以下を実行します。
+PostgreSQLのDBを別途用意したうえで以下を実行する。
 
 ```sh
 export TAG_NAME=$(git symbolic-ref --short HEAD | sed -e "s:/:-:g" | sed -e "s/^main$/latest/g")

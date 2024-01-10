@@ -1,4 +1,4 @@
-FROM golang:1.21.5 AS develop
+FROM golang:1.21.6 AS develop
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG TARGETPLATFORM

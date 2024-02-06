@@ -9,6 +9,10 @@ on:
       - main
   merge_group:
   workflow_dispatch:
+permissions:
+  contents: read
+  packages: read
+  statuses: write
 jobs:
   super-linter:
     runs-on: ubuntu-latest

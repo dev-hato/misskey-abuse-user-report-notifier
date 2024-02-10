@@ -55,7 +55,7 @@ jobs:
         working-directory: misskey
       - if: github.event_name != 'pull_request' || github.event.action != 'closed'
         run: sed -i -e 's/FROM postgres:.*/FROM postgres:${{ steps.get_misskey_postgres_version.outputs.version }}/g' db/Dockerfile
-      - uses: dev-hato/actions-diff-pr-management@v1.1.10
+      - uses: dev-hato/actions-diff-pr-management@v1.1.12
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           branch-name-prefix: fix-format

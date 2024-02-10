@@ -11,7 +11,8 @@ on:
     branches:
       - main
   merge_group:
-permissions: read-all
+permissions:
+  pull-requests: write
 jobs:
   format:
     runs-on: ubuntu-latest

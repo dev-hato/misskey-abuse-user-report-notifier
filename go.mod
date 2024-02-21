@@ -1,13 +1,13 @@
 module github.com/dev-hato/misskey-abuse-user-report-notifier
 
-go 1.21
+go 1.22
 
-toolchain go1.21.4
+toolchain go1.22.0
 
 require (
 	entgo.io/ent v0.13.0
 	github.com/bwmarrin/discordgo v0.27.1
-	github.com/cosmtrek/air v1.49.0
+	github.com/cosmtrek/air v1.50.0
 	github.com/lib/pq v1.10.9
 	github.com/sirupsen/logrus v1.9.3
 	github.com/yitsushi/go-misskey v1.1.6

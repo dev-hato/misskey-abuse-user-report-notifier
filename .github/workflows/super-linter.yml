@@ -30,7 +30,7 @@ jobs:
           PATH="$(docker run --rm --entrypoint '' "ghcr.io/${action//\/slim@/:slim-}" /bin/sh -c 'echo $PATH')"
           echo "PATH=/github/workspace/node_modules/.bin:${PATH}" >> "$GITHUB_ENV"
       - name: Super-Linter
-        uses: super-linter/super-linter/slim@v6.2.0
+        uses: super-linter/super-linter/slim@v6.3.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BRANCH: main

@@ -6,7 +6,7 @@ toolchain go1.22.0
 
 require (
 	entgo.io/ent v0.13.1
-	github.com/bwmarrin/discordgo v0.27.1
+	github.com/bwmarrin/discordgo v0.28.1
 	github.com/cosmtrek/air v1.51.0
 	github.com/lib/pq v1.10.9
 	github.com/sirupsen/logrus v1.9.3

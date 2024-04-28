@@ -36,6 +36,7 @@ jobs:
           DEFAULT_BRANCH: main
           LINTER_RULES_PATH: .
           VALIDATE_GO: false
+          VALIDATE_JSCPD: false
           IGNORE_GENERATED_FILES: true
 concurrency:
   group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}

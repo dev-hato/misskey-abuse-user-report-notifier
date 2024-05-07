@@ -2,7 +2,7 @@ module github.com/dev-hato/misskey-abuse-user-report-notifier
 
 go 1.22
 
-toolchain go1.22.2
+toolchain go1.22.3
 
 require (
 	entgo.io/ent v0.13.1

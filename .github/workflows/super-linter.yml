@@ -38,6 +38,7 @@ jobs:
           VALIDATE_GO: false
           VALIDATE_JSCPD: false
           IGNORE_GENERATED_FILES: true
+          LOG_LEVEL: DEBUG
 concurrency:
   group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
   cancel-in-progress: true

@@ -17,7 +17,7 @@ jobs:
       COMPOSE_DOCKER_CLI_BUILD: 1
       REPOSITORY: ${{github.repository}}
     steps:
-      - uses: actions/checkout@v4.1.5
+      - uses: actions/checkout@v4.1.6
       - uses: docker/login-action@v3.1.0
         with:
           registry: ghcr.io
@@ -47,7 +47,7 @@ jobs:
   update-dockle:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.1.5
+      - uses: actions/checkout@v4.1.6
         if: github.event_name != 'pull_request' || github.event.action != 'closed'
         with:
           fetch-depth: 0
@@ -67,7 +67,7 @@ jobs:
       DOCKER_CONTENT_TRUST: 1
       REPOSITORY: ${{github.repository}}
     steps:
-      - uses: actions/checkout@v4.1.5
+      - uses: actions/checkout@v4.1.6
       - run: echo "TAG_NAME=${HEAD_REF//\//-}" >> "$GITHUB_ENV"
         env:
           HEAD_REF: ${{github.head_ref || github.event.merge_group.head_ref}}

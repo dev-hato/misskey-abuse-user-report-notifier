@@ -6,7 +6,7 @@ ARG TARGETPLATFORM
 
 WORKDIR /go/app
 COPY go.mod go.sum ./
-COPY tools/tools.go ./tools/
+COPY tools.go ./
 RUN go install github.com/cosmtrek/air
 COPY . .
 RUN mapfile -t PLATFORM < <(echo "${TARGETPLATFORM}" | tr '/' ' ') \

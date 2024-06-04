@@ -7,7 +7,7 @@ ARG TARGETPLATFORM
 WORKDIR /go/app
 COPY go.mod go.sum ./
 COPY tools.go ./
-RUN go install github.com/cosmtrek/air
+RUN go install github.com/air-verse/air
 COPY . .
 RUN mapfile -t PLATFORM < <(echo "${TARGETPLATFORM}" | tr '/' ' ') \
     && CGO_ENABLED=0 GOOS=linux GOARCH=${PLATFORM[2]} go build -o ./app \

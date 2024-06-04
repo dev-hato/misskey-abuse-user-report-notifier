@@ -1,5 +1,5 @@
 # checkov:skip=CKV_DOCKER_2
-FROM golang:1.22.3 AS develop
+FROM golang:1.22.4 AS develop
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG TARGETPLATFORM

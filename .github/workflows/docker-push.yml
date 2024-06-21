@@ -31,14 +31,14 @@ jobs:
         env:
           HEAD_REF: ${{github.head_ref || github.event.merge_group.head_ref}}
       - name: Build and push (dev)
-        uses: docker/bake-action@v5.0.2
+        uses: docker/bake-action@v5.1.0
         env:
           DOCKER_CONTENT_TRUST: 1
         with:
           push: true
           files: docker-compose.yml,dev.base.docker-compose.yml
       - name: Build and push (production)
-        uses: docker/bake-action@v5.0.2
+        uses: docker/bake-action@v5.1.0
         env:
           DOCKER_CONTENT_TRUST: 1
         with:

@@ -12,8 +12,8 @@ github.com/DATA-DOG/go-sqlmock v1.5.0 h1:Shsta01QNfFxHCfpW6YH2STWB0MudeXXEWMr20O
 github.com/DATA-DOG/go-sqlmock v1.5.0/go.mod h1:f/Ixk793poVmq4qj/V1dPUg2JEAKC73Q5eFN3EC/SaM=
 github.com/agext/levenshtein v1.2.1 h1:QmvMAjj2aEICytGiWzmxoE0x2KZvE0fvmqMOfy2tjT8=
 github.com/agext/levenshtein v1.2.1/go.mod h1:JEDfjyjHDjOF/1e4FlBE/PkbqA9OfWu2ki2W0IB5558=
-github.com/air-verse/air v1.52.2 h1:z5v9TSdGacd5fheA4+3CRMtWdMA5JspM6ju04tlrAvw=
-github.com/air-verse/air v1.52.2/go.mod h1:1xd2oyYArpkaeJ0IXNYj+GYLwdfPfID+cAh7cu6XTlI=
+github.com/air-verse/air v1.52.3 h1:BkFIIk4v21hsViWzV9z7hvuLjhI+yXt4Xa16M1mb+4o=
+github.com/air-verse/air v1.52.3/go.mod h1:1xd2oyYArpkaeJ0IXNYj+GYLwdfPfID+cAh7cu6XTlI=
 github.com/alecthomas/chroma/v2 v2.13.0 h1:VP72+99Fb2zEcYM0MeaWJmV+xQvz5v5cxRHd+ooU1lI=
 github.com/alecthomas/chroma/v2 v2.13.0/go.mod h1:BUGjjsD+ndS6eX37YgTchSEG+Jg9Jv1GiZs9sqPqztk=
 github.com/apparentlymart/go-textseg/v13 v13.0.0 h1:Y+KvPE1NYz0xl601PVImeQfFyEy6iT90AvPUL1NNfNw=

@@ -5,7 +5,7 @@ go 1.22
 toolchain go1.22.5
 
 require (
-	entgo.io/ent v0.13.1
+	entgo.io/ent v0.14.0
 	github.com/air-verse/air v1.52.3
 	github.com/bwmarrin/discordgo v0.28.1
 	github.com/lib/pq v1.10.9
